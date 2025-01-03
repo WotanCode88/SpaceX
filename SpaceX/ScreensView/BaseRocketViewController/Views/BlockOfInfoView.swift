@@ -41,19 +41,19 @@ class BlockOfInfoView: UIView {
                     
                     let countEngines1FirstStage = falcon9.firstStage.engines
                     let countFuel1FirstStage = falcon9.firstStage.fuelAmountTons
-                    let timeUntilBurn1FirstStage = falcon9.firstStage.burnTimeSEC
+                    let timeUntilBurn1FirstStage = falcon9.firstStage.burnTimeSEC ?? 0
                     
                     self.countEngines1FirstStage.text = String(countEngines1FirstStage)
                     self.countFuel1FirstStage.text = String("\(countFuel1FirstStage) тонн")
-                    self.timeUntilBurn1FirstStage.text = String(timeUntilBurn1FirstStage!)
+                    self.timeUntilBurn1FirstStage.text = String("\(timeUntilBurn1FirstStage) сек")
                     
                     let countEngines1SecondStage = falcon9.secondStage.engines
                     let countFuel1SecondStage = falcon9.secondStage.fuelAmountTons
-                    let timeUntilBurn1SecondStage = falcon9.secondStage.burnTimeSEC
+                    let timeUntilBurn1SecondStage = falcon9.secondStage.burnTimeSEC ?? 0
                     
                     self.countEngines1SecondStage.text = String(countEngines1SecondStage)
                     self.countFuel1SecondStage.text = String("\(countFuel1SecondStage) тонн")
-                    self.timeUntilBurn1SecondStage.text = String(timeUntilBurn1SecondStage!)
+                    self.timeUntilBurn1SecondStage.text = String("\(timeUntilBurn1SecondStage) сек")
                 } else {
                     return
                 }

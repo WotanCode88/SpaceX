@@ -2,13 +2,20 @@ import UIKit
 
 class PageViewController: UIPageViewController {
     
+    let falconHeavy = BaseRocketViewController(nameOfRocket: "Falcon Heavy", nameOfImage: "FalconHeavy")
+    let falcon9 = BaseRocketViewController(nameOfRocket: "Falcon 9", nameOfImage: "falcon9")
+    let falcon1 = BaseRocketViewController(nameOfRocket: "Falcon 1", nameOfImage: "Falcon1")
+    let starShip = BaseRocketViewController(nameOfRocket: "Starship", nameOfImage: "starship")
+    
     // MARK: - Pages
-    private let pages: [UIViewController] = [
-        FalconHeavy(),
-        Falcon9(),
-        Test(),
-        Page3()
+    private lazy var pages: [UIViewController] = [
+        falconHeavy,
+        falcon9,
+        falcon1,
+        starShip,
+//        Test()
     ]
+    
     private let pageControl = UIPageControl()
     
     // MARK: - Init

@@ -1,7 +1,8 @@
+
 import UIKit
 
-class Falcon9: UIViewController {
-//MARK: - UI
+class BaseRocketViewController: UIViewController {
+    //MARK: - UI
 
     let scrollView: UIScrollView = {
         let view = UIScrollView()
@@ -17,18 +18,22 @@ class Falcon9: UIViewController {
         return view
     }()
     
-    let img: UIImageView = {
+    let nameOfImage: String
+        
+    lazy var img: UIImageView = {
         let img = UIImageView()
-        img.image = UIImage(named: "falconHeavy2")
+        img.image = UIImage(named: nameOfImage)
         img.translatesAutoresizingMaskIntoConstraints = false
         img.contentMode = .scaleAspectFill
         img.clipsToBounds = true
         return img
     }()
     
-    let titleOfPage: UILabel = {
+    let nameOfRocket: String
+    
+    lazy var titleOfPage: UILabel = {
         let title = UILabel()
-        title.text = "Falcon 9"
+        title.text = nameOfRocket
         title.textColor = .white
         title.font = UIFont.boldSystemFont(ofSize: 24)
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -47,12 +52,24 @@ class Falcon9: UIViewController {
     }()
      
      let rocketLaunchButton = RocketLaunchButton()
-     
+    
+    init (nameOfRocket: String, nameOfImage: String) {
+        self.nameOfRocket = nameOfRocket
+        self.nameOfImage = nameOfImage
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        viewDidLoad()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
      //MARK: - viewDidLoad
      override func viewDidLoad() {
          super.viewDidLoad()
          self.view.backgroundColor = .black
-         
          
          setupImageView()
          setupView()
@@ -132,7 +149,7 @@ class Falcon9: UIViewController {
         ])
     }
     
-    let horizontal = HorizontalInfoView(nameOfRocket: "Falcon 9")
+    lazy var horizontal = HorizontalInfoView(nameOfRocket: nameOfRocket)
     
     private func setupHorizontalView() {
         contentView.addSubview(horizontal)
@@ -146,7 +163,7 @@ class Falcon9: UIViewController {
         
     }
     
-    let allInfoView = BlockOfInfoView(nameOfRocket: "Falcon 9")
+    lazy var allInfoView = BlockOfInfoView(nameOfRocket: nameOfRocket)
     
     func setupSecondContent() {
         [allInfoView, rocketLaunchButton]
@@ -171,7 +188,7 @@ class Falcon9: UIViewController {
     }
     
     @objc func rocketViewTapped() {
-        let rocketVC = NewRocketViewController(rocket: "Falcon 9")
+        let rocketVC = RocketViewController(rocket: nameOfRocket)
         navigationController?.pushViewController(rocketVC, animated: true)
     }
     
