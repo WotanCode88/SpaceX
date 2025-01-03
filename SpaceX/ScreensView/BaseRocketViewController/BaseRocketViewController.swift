@@ -70,7 +70,7 @@ class BaseRocketViewController: UIViewController {
      override func viewDidLoad() {
          super.viewDidLoad()
          self.view.backgroundColor = .black
-         
+                  
          setupImageView()
          setupView()
          setupFirstContent()
@@ -79,6 +79,8 @@ class BaseRocketViewController: UIViewController {
          addTargets()
      }
 
+    //MARK: - addTargets
+    
     private func addTargets() {
         settingButton.addTarget(self, action: #selector(targetForSettingButton),
                                 for: .touchUpInside)
@@ -98,7 +100,7 @@ class BaseRocketViewController: UIViewController {
                                 for: .touchUpOutside)
     }
     
-    //MARK: - setupAllViews
+    //MARK: - setupViews
     
     func setupImageView() {
         view.addSubview(img)
@@ -134,6 +136,8 @@ class BaseRocketViewController: UIViewController {
         ])
     }
     
+    //MARK: - setupFirstContent
+    
     func setupFirstContent() {
         let views = [titleOfPage, settingButton]
         views.forEach {contentView.addSubview($0)}
@@ -148,6 +152,8 @@ class BaseRocketViewController: UIViewController {
             settingButton.widthAnchor.constraint(equalToConstant: 40),
         ])
     }
+    
+    //MARK: - setupHorizontal
     
     lazy var horizontal = HorizontalInfoView(nameOfRocket: nameOfRocket)
     
@@ -165,6 +171,8 @@ class BaseRocketViewController: UIViewController {
     
     lazy var allInfoView = BlockOfInfoView(nameOfRocket: nameOfRocket)
     
+    //MARK: - setupSecondContent
+
     func setupSecondContent() {
         [allInfoView, rocketLaunchButton]
             .forEach {contentView.addSubview($0)}

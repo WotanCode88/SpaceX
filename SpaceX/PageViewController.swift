@@ -9,11 +9,11 @@ class PageViewController: UIPageViewController {
     
     // MARK: - Pages
     private lazy var pages: [UIViewController] = [
+//        Test(),
         falconHeavy,
         falcon9,
         falcon1,
-        starShip,
-//        Test()
+        starShip
     ]
     
     private let pageControl = UIPageControl()
@@ -78,25 +78,5 @@ extension PageViewController: UIPageViewControllerDataSource, UIPageViewControll
         guard completed, let currentVC = pageViewController.viewControllers?.first,
               let index = pages.firstIndex(of: currentVC) else { return }
         pageControl.currentPage = index
-    }
-}
-
-// MARK: - Example Pages
-class Page1: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .red
-    }
-}
-class Page2: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .white
-    }
-}
-class Page3: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .black
     }
 }

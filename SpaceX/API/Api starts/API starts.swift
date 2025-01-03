@@ -1,31 +1,67 @@
 import Foundation
 
-class Api1 {
+class ApiStarts {
+    // Массив для хранения данных
+    var launches: [WelcomeElement1] = []
     
-    var rockets1: [WelcomeElement1] = []
-    
-    public func getData(completion: @escaping ([WelcomeElement1]) -> Void) {
-        let session = URLSession.shared
-
-        guard let url = URL(string: "https://api.spacexdata.com/v4/launches") else { return }
-
-        session.dataTask(with: url) { data, response, error in
-            if error == nil, let parsData = data {
-                let decoder = JSONDecoder()
-                do {
-                    let decodeData = try decoder.decode([WelcomeElement1].self, from: parsData)
-
-                    // Передаем данные через completion
-                    DispatchQueue.main.async {
-                        self.rockets1 = decodeData
-                        completion(decodeData) // Возвращаем данные
-                    }
-                } catch {
-                    print("Error decoding JSON: \(error)")
-                }
-            } else {
-                print("Error: \(error?.localizedDescription ?? "Unknown error")")
+    // Функция для выполнения запроса
+    func fetchLaunches(completion: @escaping (Result<[WelcomeElement1], Error>) -> Void) {
+        // URL API
+        let urlString = "https://api.spacexdata.com/v4/launches"
+        guard let url = URL(string: urlString) else {
+            completion(.failure(NSError(domain: "Invalid URL", code: -1, userInfo: nil)))
+            return
+        }
+        
+        // Создание запроса
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        // Выполнение запроса
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
             }
-        }.resume()
+            
+            guard let data = data else {
+                completion(.failure(NSError(domain: "No data returned", code: -1, userInfo: nil)))
+                return
+            }
+            
+            do {
+                // Декодирование ответа
+                let fetchedLaunches = try JSONDecoder().decode([WelcomeElement1].self, from: data)
+                completion(.success(fetchedLaunches))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+        task.resume()
+    }
+    
+    // Метод для запуска запроса
+    func startFetching() {
+        fetchLaunches { [weak self] result in
+            switch result {
+            case .success(let fetchedLaunches):
+                // Сохраняем данные в массив
+                self?.launches = fetchedLaunches
+                
+                // Пример взаимодействия с массивом
+                print("Всего запусков: \(fetchedLaunches.count)")
+                if let firstLaunch = fetchedLaunches.first {
+                    print("Первый запуск:")
+                    print("Название: \(firstLaunch.name)")
+                    print("Дата (UTC): \(firstLaunch.dateUTC)")
+                    print("Детали: \(firstLaunch.details ?? "Нет деталей")")
+                }
+            case .failure(let error):
+                print("Ошибка при получении запусков: \(error.localizedDescription)")
+            }
+        }
     }
 }
+
+
