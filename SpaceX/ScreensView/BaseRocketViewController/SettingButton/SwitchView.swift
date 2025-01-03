@@ -85,7 +85,7 @@ class Switch: UIView {
     @objc func switchTapped() {
         isSwitchOn.toggle()
         setColorsText()
-
+        
         var targetX: CGFloat
         if isSwitchOn {
             targetX = switchContainer.bounds.width - switchButton.bounds.width - 5
@@ -94,7 +94,7 @@ class Switch: UIView {
             targetX = 5
             UserDefaults.standard.set(false, forKey: keyForStatement)
         }
-
+        
         UIView.animate(withDuration: 0.3, animations: {
             self.switchButtonLeadingConstraint.constant = targetX
             self.layoutIfNeeded() // Обновляем layout
@@ -136,3 +136,5 @@ class Switch: UIView {
             : 5
     }
 }
+
+
